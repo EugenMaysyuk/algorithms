@@ -1,12 +1,11 @@
-package week2;
-
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * A double-ended queue or deque (pronounced "deck") is a generalization of a stack
- * and a queue that supports adding and removing items from either the front or
- * the back of the data structure.
+ * A double-ended queue or deque (pronounced "deck")
+ * is a generalization of a stack and a queue that
+ * supports adding and removing items from either the
+ * front or the back of the data structure.
  * <p>
  * Created by Eugene on 08-Mar-16.
  */
@@ -110,56 +109,28 @@ public class Deque<Item> implements Iterable<Item> {
         return removed;
     }
 
-    public Iterator<Item> iterator() {
-        return new Iterator<Item>() {
+    private class DIterator implements Iterator<Item> {
+        private Node current = first;
 
-            private Node current = first;
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
 
-            @Override
-            public boolean hasNext() {
-                return current != null;
+        @Override
+        public Item next() {
+            if (!hasNext()) {
+                throw new UnsupportedOperationException();
             }
 
-            @Override
-            public Item next() {
-                if (!hasNext()) {
-                    throw new UnsupportedOperationException();
-                }
+            Item item = current.item;
+            current = current.next;
 
-                Item item = current.item;
-                current = current.next;
-
-                return item;
-            }
-        };
+            return item;
+        }
     }
 
-    public static void main(String[] args) {
-        /*Deque<Integer> integers = new Deque<Integer>();
-        for (int i = 0; i < 1000000000; i++) {
-            try {
-                Random random = new Random();
-                int operationIndex = random.nextInt(4);
-                switch (operationIndex) {
-                    case 0:
-                        integers.addFirst(42);
-                        break;
-                    case 1:
-                        integers.addLast(42);
-                        break;
-                    case 2:
-                        integers.removeFirst();
-                        break;
-                    case 3:
-                        integers.removeLast();
-                        break;
-
-                }
-
-
-            } catch (java.util.NoSuchElementException e) {
-
-            }
-        }*/
+    public Iterator<Item> iterator() {
+        return new DIterator();
     }
 }
