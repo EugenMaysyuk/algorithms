@@ -16,9 +16,9 @@ public class Deque<Item> implements Iterable<Item> {
     private int size;
 
     private class Node {
-        public Item item;
-        public Node next;
-        public Node prev;
+        private Item item;
+        private Node next;
+        private Node prev;
     }
 
     public Deque() {
@@ -109,7 +109,7 @@ public class Deque<Item> implements Iterable<Item> {
         return removed;
     }
 
-    private class DIterator implements Iterator<Item> {
+    private class DequeIterator implements Iterator<Item> {
         private Node current = first;
 
         @Override
@@ -120,7 +120,7 @@ public class Deque<Item> implements Iterable<Item> {
         @Override
         public Item next() {
             if (!hasNext()) {
-                throw new UnsupportedOperationException();
+                throw new NoSuchElementException();
             }
 
             Item item = current.item;
@@ -131,6 +131,6 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public Iterator<Item> iterator() {
-        return new DIterator();
+        return new DequeIterator();
     }
 }
